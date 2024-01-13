@@ -14,17 +14,10 @@
  */
 void ejecutarComando(char **listaPalabras)
 {
-	struct stat st;
 	char *comando;
 	pid_t proceso;
 
 	comando = pathEnv(listaPalabras[0]);
-	if (stat(comando, &st) != 0)
-	{
-		fprintf(stderr, "bash: %s command not found\n", listaPalabras[0]);
-		free(comando);
-		return;
-	}
 
 	proceso = fork();
 	if (proceso == -1)
@@ -34,24 +27,24 @@ void ejecutarComando(char **listaPalabras)
 		return;
 	}
 
-	if (proceso != 0)
+	else if (proceso == 0)
+	{
+		/*
+		 *if (strcmp("printenv", wordList[0]) == 0 || strcmp("env", wordList[0])==0)
+		 *{
+		 *	printEnv();
+		 *	free(command);
+		 *}
+		*/
+		execve(comando, listaPalabras, environ);
+		perror("./shell");
+		exit(EXIT_FAILURE);
+	}
+	else
 	{
 		int estado;
 
 		waitpid(proceso, &estado, 0);
 		free(comando);
-		if (estado != 0)
-		{
-			exit(2);
-		}
-		return;
 	}
-
-	if (execve(comando, listaPalabras, environ) == -1)
-	{
-		perror("bash: execve");
-		free(comando);
-		exit(EXIT_FAILURE);
-	}
-	free(comando);
 }

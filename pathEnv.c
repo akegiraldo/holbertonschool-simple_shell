@@ -38,7 +38,7 @@ char *pathEnv(char *comando)
 			exit(EXIT_FAILURE);
 		}
 
-		snprintf(route, route_len, "%s/%s", dir, comando);
+		sprintf(route, "%s/%s", dir, comando);
 
 		if (access(route, X_OK) == 0)
 		{

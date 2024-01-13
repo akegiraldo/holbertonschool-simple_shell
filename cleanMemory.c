@@ -18,7 +18,7 @@ void limpiarMemoria(char *buffer, char **listaPalabras)
 	for (i = 0; listaPalabras[i] != NULL; i++)
 	{
 		free(listaPalabras[i]);
-		listaPalabras[i] = NULL;
+		/* listaPalabras[i] = NULL; */
 	}
 	free(listaPalabras);
 	free(buffer);

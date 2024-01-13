@@ -27,7 +27,7 @@ int main(void)
 		if (strcmp(buffer, "exit") == 0 || strcmp(buffer, "quit") == 0)
 		{
 			free(buffer);
-			break;
+			exit(0);
 		}
 
 
